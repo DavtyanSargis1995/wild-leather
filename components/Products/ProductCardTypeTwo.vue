@@ -68,7 +68,7 @@
           >
 
             <h5 class="font-weight-bold leather--text mb-2 product-title">
-              <a class="black-dark--text" to="/collections/wallet/1234">{{product.title.am}}</a>
+              <nuxt-link class="black-dark--text" to="/collections/wallet/1234">{{product.name.am}}</nuxt-link>
             </h5>
             <span class="price transition-fast-in-fast-out">${{product.price.usd}}</span>
 
@@ -110,7 +110,7 @@
 
 <style>
   .v-dialog {
-    max-width: unset!important;
+    max-width: 1000px!important;
     background: #fff;
   }
 </style>

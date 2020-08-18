@@ -62,34 +62,22 @@
       <div style="width: 140px;">
         <exchange-rates />
       </div>
-
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <cart-icon :click-handler="toggleSidebar"/>
+      <account />
     </v-app-bar>
-    <v-main style="padding: 0">
-      <nuxt />
-    </v-main>
     <v-navigation-drawer
+      class="sidebar"
       v-model="rightDrawer"
       :right="right"
       temporary
       fixed
     >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
+      <cart-sidebar/>
     </v-navigation-drawer>
+    <v-main style="padding: 0">
+      <nuxt />
+    </v-main>
+
 
     <v-footer dark class="page-footer">
       <v-container>
@@ -97,10 +85,10 @@
           <v-col>
             <nav>
               <ul>
-                <li v-for="item in items" :to="$i18n.path(item.to)" :key="item.title">
-                  <a class="d-inline-block white--text text-decoration-none mb-3" href="">
+                <li v-for="item in items" :key="item.title">
+                  <nuxt-link class="d-inline-block white--text text-decoration-none mb-3" :to="$i18n.path(item.to)">
                     {{item.title}}
-                  </a>
+                  </nuxt-link>
                 </li>
               </ul>
             </nav>
@@ -135,6 +123,10 @@
 import Logo from '~/components/Logo.vue';
 import Languages from '~/components/Languages.vue';
 import ExchangeRates from '~/components/ExchangeRates.vue';
+import Account from '../components/Account';
+import Cart from '../pages/_lang/cart';
+import CartIcon from '../components/Cart/CartIcon';
+import CartSidebar from '../components/Cart/CartSidebar';
 export default {
   computed: {
     menuItems () {
@@ -168,7 +160,7 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Խանութ',
-          to: 'shop',
+          to: 'collections',
           name: 'shop',
         },
         {
@@ -199,7 +191,6 @@ export default {
   methods: {
     handleScroll () {
       // Your scroll handling here
-      console.log(window.scrollY);
       if(window.scrollY >= 56) {
         this.fixed = true;
         this.dark = false;
@@ -209,6 +200,9 @@ export default {
         this.dark = true
         this.color = '';
       }
+    },
+    toggleSidebar() {
+      this.rightDrawer = !this.rightDrawer
     }
   },
   beforeMount () {
@@ -218,6 +212,10 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   components: {
+    CartSidebar,
+    CartIcon,
+    Cart,
+    Account,
     Logo,
     Languages,
     ExchangeRates,
@@ -232,6 +230,13 @@ export default {
 
 
 <style scoped lang="scss">
+  .sidebar {
+    @include z-index(sidebar);
+    width: 100%!important;
+    @media (min-width: 576px) {
+      width: 450px!important;
+    }
+  }
   .page-footer {
     a {
       &:hover::after {

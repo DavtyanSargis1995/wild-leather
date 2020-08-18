@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-carousel": "^1.0.5",
-    "@nuxtjs/firebase": "^6.1.1",
     "animate.css": "^4.1.0",
+    "cookieparser": "^0.1.0",
+    "cross-env": "^7.0.2",
     "firebase": "^7.17.1",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^2.2.0",
     "nuxt": "^2.0.0",
     "v-wow": "^1.2.1",
     "vue": "^2.6.11",

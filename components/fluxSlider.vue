@@ -80,8 +80,8 @@
       },
       mounted: false,
       vfImages: [
-        'https://cdn.shopify.com/s/files/1/2786/9162/files/Uncharted_Satchel-10_1800x.jpg?v=1522901431',
         'https://cdn.shopify.com/s/files/1/2786/9162/files/SHANESATCHEL-web-2_1800x.jpg?v=1542846250',
+        'https://cdn.shopify.com/s/files/1/2786/9162/files/Uncharted_Satchel-10_1800x.jpg?v=1522901431',
         'https://cdn.shopify.com/s/files/1/2786/9162/files/RoyalV2-1_1800x.jpg?v=1539384607'
       ],
       vfTransitions: [ 'fade', 'fade', 'fade'],

@@ -21,15 +21,34 @@
 // }
 
 
+//
+// export default function({ app, store, redirect, route }) {
+//   console.log(store.state);
+//   store.state.user != null && route.name == 'login' ? redirect('/admin') : ''
+//   // store.state.user == null && isAdminRoute(route) ? redirect('/login') : ''
+// }
+//
+// function isAdminRoute(route) {
+//   if (route.matched.some(record => record.path == '/admin')) {
+//     return true
+//   }
+// }
 
-export default function({ app, store, redirect, route }) {
+
+export default ({store, route, redirect}) => {
+
   console.log(store.state);
-  store.state.user != null && route.name == 'login' ? redirect('/admin') : ''
-  // store.state.user == null && isAdminRoute(route) ? redirect('/login') : ''
-}
+  const user = store.state.users.user;
 
-function isAdminRoute(route) {
-  if (route.matched.some(record => record.path == '/admin')) {
-    return true
+  const blockedRoute = /\/admin\/*/g;
+  const loginRoute = /\/login\/*/g;
+
+  if(!user && route.path.match(blockedRoute)) {
+    redirect('/');
   }
+
+  if(user && route.path.match(loginRoute)) {
+    redirect('/admin');
+  }
+
 }

@@ -1,4 +1,4 @@
 <template>
-  <h1>Conataaaaaaaaaaaaaaaaaact</h1>
+  <h1 class="text-center">Contact</h1>
 </template>
 

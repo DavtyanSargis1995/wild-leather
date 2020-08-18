@@ -1,4 +1,4 @@
 <template>
-  <h1>Makeeeeeeeeeeeeer</h1>
+  <h1 class="text-center">Maker</h1>
 </template>
 
