@@ -1,29 +1,31 @@
 <template>
-  <div class="quantity-toggle py-1 px-2">
-    <span @click="decrement()">&mdash;</span>
-    <input type="text" :value="quantity">
-    <span @click="increment()">&#xff0b;</span>
+  <div class="quantity-toggle d-flex justify-space-between align-center" :class="{vertical}">
+    <v-btn small icon @click="changeCount(-1)">
+      <v-icon size="13">mdi-minus</v-icon>
+    </v-btn>
+    <span>{{value}}</span>
+    <v-btn small icon @click="changeCount(1)">
+      <v-icon size="13">mdi-plus</v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
   export default {
+    props: {
+      value: Number,
+      product: Object,
+      vertical: Boolean
+    },
     data () {
       return {
         quantity: 1
       }
     },
     methods: {
-      increment () {
-        this.quantity++
+      changeCount (count) {
+        this.$store.commit('cartProducts/ADD_TO_CART', { product: this.product, count});
       },
-      decrement () {
-        if(this.quantity === 1) {
-          alert('Negative quantity not allowed')
-        } else {
-          this.quantity--
-        }
-      }
     }
   }
 </script>
@@ -31,9 +33,24 @@
 <style lang="scss">
   .quantity-toggle {
     display: inline-flex;
-    border: 1px solid #6a6a6a;
+    border-radius: 30px;
+    background: rgb(247, 247, 247);
     color: #6a6a6a;
-    font-size: 15px;
+    width: 75px;
+    font-size: 14px;
+    &.vertical{
+      width: auto;
+      flex-direction: column;
+      button:first-child{
+        order: 3;
+      }
+      &>span{
+        order: 2;
+      }
+      button:last-child{
+        order: 1;
+      }
+    }
     span {
       cursor: pointer;
     }

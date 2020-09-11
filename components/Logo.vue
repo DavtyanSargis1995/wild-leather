@@ -1,6 +1,6 @@
 <template>
-  <nuxt-link :to="path" tag="div" class="mr-16 d-flex align-items-center">
-    <img src="~assets/logo.jpg" class="Logo">
+  <nuxt-link :to="path" tag="div" class="mr-16 d-flex align-items-center Logo-holder">
+    <img src="~assets/logo.jpg">
   </nuxt-link>
 </template>
 
@@ -10,9 +10,12 @@ export default {
 }
 </script>
 
-<style>
-  .Logo {
-    width: 80px;
-    cursor: pointer;
+<style lang="scss">
+  .Logo-holder {
+    height: 100%;
+    img {
+      height: 100%;
+      cursor: pointer;
+    }
   }
 </style>

@@ -68,7 +68,7 @@
           >
 
             <h5 class="font-weight-bold leather--text mb-2 product-title">
-              <a class="black-dark--text" to="/collections/wallet/1234">{{product.title.am}}</a>
+              <nuxt-link class="black-dark--text" to="/products/1234">{{product.name.am}}</nuxt-link>
             </h5>
             <span class="price transition-fast-in-fast-out">${{product.price.usd}}</span>
 
@@ -76,9 +76,10 @@
 
         </v-card>
         <v-btn
-          color="leather"
+          @click="addToCart(product)"
           width="100%"
           class="text-center mt-2 add-to-cart px-5 py-7"
+          tile
           dark
         >
           <!--Add to cart-->
@@ -99,6 +100,9 @@
       })
     },
     methods: {
+      addToCart(product){
+        this.$store.commit('cartProducts/ADD_TO_CART', { product, count: 1});
+      },
       quickView(id) {
         this.$dialog.show(ProductItem)
       }
@@ -130,9 +134,6 @@
     }
     .add-to-cart {
       opacity: 0;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
       cursor: pointer;
     }
     .quick-view {

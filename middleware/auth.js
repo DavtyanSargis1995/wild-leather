@@ -23,7 +23,6 @@
 
 
 export default function({ app, store, redirect, route }) {
-  console.log(store.state);
   store.state.user != null && route.name == 'login' ? redirect('/admin') : ''
   // store.state.user == null && isAdminRoute(route) ? redirect('/login') : ''
 }

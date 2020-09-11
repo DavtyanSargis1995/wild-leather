@@ -12,7 +12,7 @@
           <h2>Featured Products</h2>
           <v-subheader class="justify-center">LEATHER WALLETS</v-subheader>
         </div>
-        <products-list/>
+        <products-list :products = 'products'/>
         <div class="text-center">
           <v-btn raised dark color="black" x-large class="mx-auto" to="/collections">View All</v-btn>
         </div>
@@ -33,6 +33,7 @@
   import Video from '~/components/Video.vue';
   import FluxSlider from '../../components/fluxSlider';
   import ProductsList from '../../components/Products/ProductsList';
+  import {getData} from "../../helpers/firebaseCRUD";
 
   export default {
     components: {
@@ -43,6 +44,23 @@
     },
     head () {
       return { title: this.$t('home.title') }
+    },
+    data(){
+      return {
+        products: []
+      }
+    },
+    async mounted(){
+      const snapshot = await getData('products', {
+        field: 'published',
+        condition: '==',
+        value: true
+      });
+      const products = [];
+      snapshot.docs.map(item => {
+        products.push(item.data())
+      });
+      this.products = [...products];
     },
     methods: {
       scrollTo() {

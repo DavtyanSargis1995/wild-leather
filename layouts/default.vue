@@ -26,51 +26,52 @@
       </v-list>
     </v-navigation-drawer>
     <v-alert
+      v-if="showTopSection"
       color="leather"
       class="text-center mb-0"
       dark
       dissmisible
-      v-if="showTopSection"
       style="z-index: 50; border-radius: 0"
     >
       <v-container>
         MADE TO ORDER - QUALITY LEATHER GOODS HANDCRAFTED IN ARMENIA
       </v-container>
     </v-alert>
-    <v-app-bar
-      ref="header"
-      :fixed="fixed"
-      :dark="dark"
-      :style="{zIndex: 50, top: headerTop}"
-      height="90"
-      maxHeight="90"
-    >
-      <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer" />
-      <logo :path="$i18n.path('')"/>
-      <v-spacer />
-      <v-tabs :color="color" class="d-none d-md-block">
-        <v-tab v-for="item in items" :to="$i18n.path(item.to)" :key="item.title" exact>
-          {{item.title}}
-        </v-tab>
-      </v-tabs>
-      <v-spacer />
-      <nav class="Header__Menu">
-        <div style="width: 80px;">
-          <languages />
-        </div>
-      </nav>
-      <div style="width: 140px;">
-        <exchange-rates />
-      </div>
+    <div class="navbar-holder">
+      <v-container>
+        <v-app-bar
+          shrink-on-scroll
+          ref="header"
+          :dark="dark"
+          :style="{zIndex: 50, top: headerTop}"
+          height="90"
+          maxHeight="90"
+        >
+          <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer" />
+          <logo :path="$i18n.path('')"/>
+          <v-spacer />
+          <v-tabs :color="color" class="d-none d-md-block">
+            <v-tab v-for="item in items" :to="$i18n.path(item.to)" :key="item.title" exact>
+              {{item.title}}
+            </v-tab>
+          </v-tabs>
+          <v-spacer />
+          <nav class="Header__Menu">
+            <div style="width: 80px;">
+              <languages />
+            </div>
+          </nav>
+          <div style="width: 140px;">
+            <exchange-rates />
+          </div>
+        </v-app-bar>
+      </v-container>
+    </div>
 
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
     <v-main style="padding: 0">
+      <div @click.stop="rightDrawer = !rightDrawer" class="icon-holder">
+        <CartIcon />
+      </div>
       <nuxt />
     </v-main>
     <v-navigation-drawer
@@ -78,17 +79,10 @@
       :right="right"
       temporary
       fixed
+      width="500"
+      style="z-index: 120"
     >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
+      <CartSidebar :close="() => { rightDrawer = false }"/>
     </v-navigation-drawer>
 
     <v-footer dark class="page-footer">
@@ -135,6 +129,8 @@
 import Logo from '~/components/Logo.vue';
 import Languages from '~/components/Languages.vue';
 import ExchangeRates from '~/components/ExchangeRates.vue';
+import CartIcon from "../components/Cart/CartIcon";
+import CartSidebar from "../components/Cart/CartSidebar";
 export default {
   computed: {
     menuItems () {
@@ -146,7 +142,10 @@ export default {
     },
     lang() {
       return this.$store.state.locale;
-    }
+    },
+  },
+  mounted() {
+    this.showTopSection = this.$route.name==='home' || this.$route.name==='index' || this.$route.name==='lang'
   },
   data () {
     return {
@@ -154,22 +153,16 @@ export default {
       drawer: false,
       dark: true,
       headerTop: 0,
-      showTopSection: true,
       color: '',
       headerHeight: 110,
       fixed: false,
+      showTopSection: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Գլխավոր',
-          to: '',
-          name: 'home',
-        },
-        {
-          icon: 'mdi-apps',
           title: 'Խանութ',
-          to: 'shop',
-          name: 'shop',
+          to: 'products',
+          name: 'products',
         },
         {
           icon: 'mdi-chart-bubble',
@@ -196,35 +189,17 @@ export default {
       title: 'Vuetify.js',
     }
   },
-  methods: {
-    handleScroll () {
-      // Your scroll handling here
-      console.log(window.scrollY);
-      if(window.scrollY >= 56) {
-        this.fixed = true;
-        this.dark = false;
-        this.color = 'black';
-      } else {
-        this.fixed = false;
-        this.dark = true
-        this.color = '';
-      }
-    }
-  },
-  beforeMount () {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
   components: {
+    CartSidebar,
+    CartIcon,
     Logo,
     Languages,
     ExchangeRates,
   },
   watch: {
-    $route () {
-      this.showTopSection = this.$route.name==='index' || this.$route.name==='lang'
+    $route (val) {
+      console.log(val);
+      this.showTopSection = val.name==='home' || val==='index' || val.name==='lang'
     }
   },
 }
@@ -232,6 +207,22 @@ export default {
 
 
 <style scoped lang="scss">
+  .icon-holder {
+    position: fixed;
+    right: 0;
+    color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .navbar-holder {
+    background-color: #272727;
+    position: sticky;
+    z-index: 100;
+    top: 0px;
+    header {
+      box-shadow: none!important;
+    }
+  }
   .page-footer {
     a {
       &:hover::after {

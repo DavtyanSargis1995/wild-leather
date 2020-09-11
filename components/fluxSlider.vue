@@ -69,7 +69,6 @@
 
     mounted() {
       this.mounted = true;
-      console.log(this.scrollTo);
     },
 
     props: ['scrollTo'],
