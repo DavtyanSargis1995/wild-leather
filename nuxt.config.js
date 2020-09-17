@@ -25,6 +25,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/common.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -71,7 +72,10 @@ export default {
           // https://leather-toolkits.com/leather-color-palette/
           leather: '#432417',
           'leather-light': '#e1833e',
-          'black-dark': '#272727'
+          'black-dark': '#272727',
+          error: colors.deepOrange.accent4,
+          primary: colors.blue.darken2,
+          info: colors.teal.lighten1,
         }
       }
     }
@@ -80,6 +84,9 @@ export default {
   ** Build configuration
   */
   build: {
+    splitChunks: {
+      layouts: true
+    },
     /*
     ** You can extend webpack config here
     */
@@ -106,6 +113,9 @@ export default {
       '/about',
       '/am/about',
       '/ru/about',
+      '/products/:id',
+      '/am/products/:id',
+      '/ru/products/:id',
       '/products',
       '/am/products',
       '/ru/products',

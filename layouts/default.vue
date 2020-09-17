@@ -44,25 +44,25 @@
           ref="header"
           :dark="dark"
           :style="{zIndex: 50, top: headerTop}"
-          height="90"
-          maxHeight="90"
+          height="75"
+          maxHeight="75"
         >
           <v-app-bar-nav-icon class="d-md-none" @click.stop="drawer = !drawer" />
           <logo :path="$i18n.path('')"/>
           <v-spacer />
           <v-tabs :color="color" class="d-none d-md-block">
-            <v-tab v-for="item in items" :to="$i18n.path(item.to)" :key="item.title" exact>
+            <v-tab v-for="item in items" :to="$i18n.path(item.to)" :key="item.title">
               {{item.title}}
             </v-tab>
           </v-tabs>
           <v-spacer />
-          <nav class="Header__Menu">
+          <div class="right-side d-flex align-center">
             <div style="width: 80px;">
               <languages />
             </div>
-          </nav>
-          <div style="width: 140px;">
-            <exchange-rates />
+            <div style="width: 150px;">
+              <exchange-rates />
+            </div>
           </div>
         </v-app-bar>
       </v-container>
@@ -160,6 +160,12 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
+          title: 'Գլխավոր',
+          to: '',
+          name: 'home',
+        },
+        {
+          icon: 'mdi-apps',
           title: 'Խանութ',
           to: 'products',
           name: 'products',
@@ -189,6 +195,9 @@ export default {
       title: 'Vuetify.js',
     }
   },
+  created() {
+    this.$store.dispatch('auth');
+  },
   components: {
     CartSidebar,
     CartIcon,
@@ -199,7 +208,7 @@ export default {
   watch: {
     $route (val) {
       console.log(val);
-      this.showTopSection = val.name==='home' || val==='index' || val.name==='lang'
+      this.showTopSection = val.name==='home' || val==='index'
     }
   },
 }
@@ -217,7 +226,7 @@ export default {
   .navbar-holder {
     background-color: #272727;
     position: sticky;
-    z-index: 100;
+    z-index: 50;
     top: 0px;
     header {
       box-shadow: none!important;
@@ -242,6 +251,10 @@ export default {
     ul {
       list-style: none
     }
+  }
+
+  .right-side {
+    height: 100%;
   }
 </style>
 

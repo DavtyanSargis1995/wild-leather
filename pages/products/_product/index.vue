@@ -1,9 +1,4 @@
-<template>
-  <product-item/>
-</template>
 <script>
-  import ProductItem from '../../../components/Products/ProductItem';
-  export default {
-    components: {ProductItem}
-  }
+  import Product from '~/pages/_lang/products/_product'
+  export default Product
 </script>

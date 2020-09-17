@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 80px;" class="select-holder">
+  <div style="width: 80px" class="select-holder">
     <v-select
       color="blue"
       v-model="language"
@@ -11,14 +11,12 @@
       single-line
     >
       <template slot="item" slot-scope="data">
-        <NuxtLink :to="`${data.item==='us' ? '' : '/'+data.item}${$route.fullPath.replace(/^\/[^\/]+/, '')}`" class="Header__Link" active-class="none" exact>
+        <NuxtLink :to="`${data.item==='us' ? '' : '/'+data.item}${path}`" class="Header__Link" active-class="none" exact>
           <country-flag :country='data.item' size='normal'/>
         </NuxtLink>
       </template>
-      <template slot="selection" slot-scope="data">
-        <NuxtLink :to="`${data.item==='us' ? '' : '/'+data.item}${$route.fullPath.replace(/^\/[^\/]+/, '')}`" class="Header__Link" active-class="none" exact>
-          <country-flag :country='data.item' size='normal'/>
-        </NuxtLink>
+      <template slot="selection">
+        <country-flag :country='language' size='normal'/>
       </template>
     </v-select>
   </div>
@@ -29,13 +27,21 @@ import CountryFlag from 'vue-country-flag'
 export default {
   data () {
     return {
-      language: 'am',
+      language: this.$route.params.lang || 'us',
       languages: ['am', 'ru', 'us'],
+    }
+  },
+  mounted() {
+    console.log(this.$route);
+  },
+  computed: {
+    path(){
+      return this.$route.fullPath.replace('/'+this.language, '')
     }
   },
   components: {
     CountryFlag
-  }
+  },
 }
 </script>
 

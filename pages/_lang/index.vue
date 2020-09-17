@@ -14,7 +14,7 @@
         </div>
         <products-list :products = 'products'/>
         <div class="text-center">
-          <v-btn raised dark color="black" x-large class="mx-auto" to="/collections">View All</v-btn>
+          <v-btn raised dark tile color="black" x-large class="mx-auto" to="/collections">View All</v-btn>
         </div>
       </v-flex>
 

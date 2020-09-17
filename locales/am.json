@@ -13,5 +13,16 @@
   "about": {
     "title": "Մեր մասին",
     "introduction": "Էջը ձեզ ինֆորմացնելու համար է։"
+  },
+  "contact": {
+    "title": "Կապ",
+    "introduction": "Կապ կապ կապ"
+  },
+  "productFeatures": {
+    "type": "Տեսակը",
+    "leather": "Կաշին",
+    "pocketsNumber": "Գրպանների քանակը",
+    "size": "Չափսը",
+    "color": "Կարերի գույնը"
   }
 }

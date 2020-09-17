@@ -13,5 +13,16 @@
   "about": {
     "title": "About",
     "introduction": "This page is made to give you more informations."
+  },
+  "contact": {
+    "title": "Contact",
+    "introduction": "Contact contact contact"
+  },
+  "productFeatures": {
+    "type": "Type",
+    "leather": "Leather",
+    "pocketsNumber": "Number of pockets",
+    "size": "Size",
+    "color": "Color"
   }
 }

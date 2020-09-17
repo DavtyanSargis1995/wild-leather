@@ -1,10 +1,4 @@
 <template>
-  <v-lazy
-    :options="{
-          threshold: .1
-        }"
-    transition="fade-transition"
-  >
     <v-hover v-slot:default="{ hover }">
       <div class="mb-6 card-holder mx-auto relative" style="position:relative;">
         <v-btn
@@ -13,7 +7,7 @@
           color="leather-light"
           class="white--text"
           fab
-          medium
+          small
           right
           top
         >
@@ -39,23 +33,24 @@
             <div
               class="holder d-flex flex-column transition-fast-in-fast-out white darken-2 v-card--reveal display-1 white--text overflow-hidden"
               style="height: 100%; position: absolute; top: 0"
+              @click="quickView(product.id)"
             >
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    @click="quickView(123)"
-                    class="leather darken-2 white--text quick-view"
-                    fab
-                    small
-                    center
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-eye-plus-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>View More</span>
-              </v-tooltip>
+<!--              <v-tooltip top>-->
+<!--                <template v-slot:activator="{ on, attrs }">-->
+<!--                  <v-btn-->
+<!--                    @click="quickView(123)"-->
+<!--                    class="leather darken-2 white&#45;&#45;text quick-view"-->
+<!--                    fab-->
+<!--                    small-->
+<!--                    center-->
+<!--                    v-bind="attrs"-->
+<!--                    v-on="on"-->
+<!--                  >-->
+<!--                    <v-icon>mdi-eye-plus-outline</v-icon>-->
+<!--                  </v-btn>-->
+<!--                </template>-->
+<!--                <span>View More</span>-->
+<!--              </v-tooltip>-->
 
 
             </div>
@@ -68,9 +63,9 @@
           >
 
             <h5 class="font-weight-bold leather--text mb-2 product-title">
-              <nuxt-link class="black-dark--text" to="/products/1234">{{product.name.am}}</nuxt-link>
+              <nuxt-link class="black-dark--text" :to="$i18n.path('products/'+product.id)">{{productTypes[product.type][locale]}}</nuxt-link>
             </h5>
-            <span class="price transition-fast-in-fast-out">${{product.price.usd}}</span>
+            <span class="price transition-fast-in-fast-out">{{price}}</span>
 
           </v-card-text>
 
@@ -87,27 +82,43 @@
         </v-btn>
       </div>
     </v-hover>
-  </v-lazy>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
   import ProductItem from './ProductItem';
+  import {productTypes} from "../../helpers/constants";
+
   export default {
     computed: {
       ...mapGetters({
-        isLoggedIn: 'isLoggedIn'
-      })
+        isLoggedIn: 'isLoggedIn',
+        rateSymbol: 'rate/rateSymbol',
+        rate: 'rate/rate',
+        locale: 'locale'
+      }),
+      price(){
+        if(this.rate === 'usd' || this.rate === 'eur'){
+          return `${this.rateSymbol} ${this.product.price[this.rate]}`
+        }
+        return `${this.product.price[this.rate]} ${this.rateSymbol}`
+      }
+    },
+    data(){
+      return {
+        productTypes
+      }
     },
     methods: {
       addToCart(product){
         this.$store.commit('cartProducts/ADD_TO_CART', { product, count: 1});
       },
       quickView(id) {
+        this.$store.dispatch('product/getProductInfo', id);
         this.$dialog.show(ProductItem)
       }
     },
-    props: ['product']
+    props: ['product'],
   }
 </script>
 

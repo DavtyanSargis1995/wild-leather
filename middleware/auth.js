@@ -23,7 +23,23 @@
 
 
 export default function({ app, store, redirect, route }) {
-  store.state.user != null && route.name == 'login' ? redirect('/admin') : ''
+  // store.dispatch("auth")
+  //   .then(result => {
+      if(store.state.authUser && route.name === 'login') {
+        return redirect('/admin')
+      }
+
+      if(!store.state.authUser && isAdminRoute(route)){
+        return redirect('/login')
+      }
+    // })
+    // .catch(error => {
+    //   console.error(error);
+    // });
+
+
+  // console.log(store.state.authUser, route);
+  // store.state.authUser != null && route.name === 'login' ? redirect('/admin') : ''
   // store.state.user == null && isAdminRoute(route) ? redirect('/login') : ''
 }
 

@@ -92,7 +92,7 @@
 
         <div class="font-weight-light grey--text text-caption mb-2">For the perfect meal</div>
         <h5 class="text-h6 font-weight-light leather--text mb-2">
-          <v-btn text  to="/collections/wallet/1234">{{product.name.am}}</v-btn></h5>
+          <v-btn text  to="/collections/wallet/1234">{{productTypes[product.type].am}}</v-btn></h5>
         <!--<div class="text-subtitle-1 font-weight-light mb-2">-->
           <!--{{product.shortDescription.am}}-->
         <!--</div>-->
@@ -157,11 +157,17 @@
 <script>
   import { mapGetters } from 'vuex';
   import ProductItem from './ProductItem';
+  import {productTypes} from "../../helpers/constants";
   export default {
     computed: {
       ...mapGetters({
         isLoggedIn: 'isLoggedIn'
       })
+    },
+    data(){
+      return {
+        productTypes
+      }
     },
     methods: {
       quickView(id) {

@@ -13,5 +13,16 @@
   "about": {
     "title": "О нас",
     "introduction": "Это страница для инфо."
+  },
+  "contact": {
+    "title": "Контакты",
+    "introduction": "Контакты Контакты Контакты"
+  },
+  "productFeatures": {
+    "type": "Type",
+    "leather": "Leather",
+    "pocketsNumber": "Number of pockets",
+    "size": "Size",
+    "color": "Color"
   }
 }
